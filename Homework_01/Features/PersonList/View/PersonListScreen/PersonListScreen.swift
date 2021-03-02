@@ -13,41 +13,28 @@ struct PersonListScreen: View {
     
     @State private var genderToShow: GenderPickerView.Case = .all
     
-    @State var showSecondView = false
+    @State private var showLink = false
+    
+    @State private var personLink: Person?
     
     var body: some View {
+        let link = NavigationLink("", destination: PersonDetailScreen(person: personLink), isActive: $showLink)
         
         NavigationView {
             List {
                 GenderPickerView(choosenItem: $genderToShow, title: "Filter")
                 PersonListView(genderToShow: $genderToShow)
-            }.background(NavigationLink("", destination: PersonDetailScreen(person: environment.personLink!), isActive: $showSecondView))
+            }
+            .background(link)
+            .navigationTitle(Text("Persons"))
         }.onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now()) {
-                
-                showSecondView = (environment.personLink != nil)
+                showLink = (environment.personLink != nil)
+                personLink = environment.personLink
+                environment.personLink = nil
             }
         }
 
-    }
-
-}
-
-
-struct PersonListView: View {
-    
-    @EnvironmentObject var environment: EnvironmentState
-    
-    @Binding var genderToShow: GenderPickerView.Case
-
-    var body: some View {
-        ForEach(environment.personList.persons) { person in
-            switch genderToShow {
-            case .all: PersonListCell(person: person)
-            case .male: if person.gender == .male { PersonListCell(person: person) }
-            case .female: if person.gender == .female { PersonListCell(person: person) }
-            }
-        }
     }
 
 }

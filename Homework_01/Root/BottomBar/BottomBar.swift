@@ -8,27 +8,35 @@
 import SwiftUI
 
 struct BottomBar: View {
+
+    @StateObject var environmentState: EnvironmentState
     
     var body: some View {
         
-        TabView {
-            
-            FirstFeatureScreen().tabItem {
+        TabView(selection: $environmentState.selection) {
+            WelcomeScreen().tabItem {
                 Image(systemName: "1.circle")
                 Text("First")
-            }.tag("firstFeatureScreen")
+            }.tag(Tab.welcome)
             
-            SecondFeatureScreen().tabItem {
+            PersonListScreen().tabItem {
                 Image(systemName: "2.circle")
                 Text("Second")
-            }.tag("secondFeatureScreen")
+            }.tag(Tab.personList)
             
-            ThirdFeatureScreen().tabItem {
+            AboutScreen().tabItem {
                 Image(systemName: "3.circle")
                 Text("Third")
-            }.tag("thirdFeatureScreen")
-            
-        }
+            }.tag(Tab.about)
+        }.environmentObject(environmentState)
         
     }
+    
+    enum Tab : String {
+        case welcome
+        case personList
+        case about
+    }
+    
 }
+

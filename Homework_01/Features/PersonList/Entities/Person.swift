@@ -1,5 +1,5 @@
 //
-//  Entity.swift
+//  Person.swift
 //  Homework_01
 //
 //  Created by Олег on 26.02.2021.
@@ -10,6 +10,7 @@ struct Person {
     let name: String
     let avatar: String
     let gender: Gender
+    let age: Int
     
     enum Gender {
         case male

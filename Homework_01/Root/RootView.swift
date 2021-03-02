@@ -8,13 +8,19 @@
 import SwiftUI
 
 struct RootView: View {
+    
+    @StateObject private var environmentState: EnvironmentState = .init()
+    
     var body: some View {
-        BottomBar()
+        BottomBar(environmentState: environmentState)
     }
+    
 }
 
 struct RootView_Previews: PreviewProvider {
+    
     static var previews: some View {
         RootView()
     }
+    
 }
